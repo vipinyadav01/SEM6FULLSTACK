@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 
 app.get('/contact', (req, res) => {
     console.log(__dirname)
-    res.sendFile(path.join(__dirname, "home.html"));
+    res.sendFile(path.join(__dirname, "contact.html"));
 });
 app.listen(5000, () => {
     console.log('Server is running on port 5000');
