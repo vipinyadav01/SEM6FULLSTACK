@@ -1,0 +1,19 @@
+{
+    "name": "lec2",
+    "version": "1.0.0",
+    "main": "server1.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server1.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    },
+    "dependencies": {
+        "express": "^4.21.2",
+        "path": "^0.12.7"
+    }
+}
