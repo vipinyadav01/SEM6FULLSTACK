@@ -11,19 +11,19 @@ let products = [
 ];
 
 // GET all products
-app.get('/api/products', (req, res) => {
+app.get('/products', (req, res) => {
     res.json(products);
 });
 
 // GET product by ID
-app.get('/api/products/:id', (req, res) => {
+app.get('/products/:id', (req, res) => {
     const product = products.find(p => p.id === parseInt(req.params.id));
     if (!product) return res.status(404).json({ message: 'Product not found' });
     res.json(product);
 });
 
 // CREATE new product
-app.post('/api/products', (req, res) => {
+app.post('/products', (req, res) => {
     const product = {
         id: products.length + 1,
         name: req.body.name,
@@ -34,7 +34,7 @@ app.post('/api/products', (req, res) => {
 });
 
 // UPDATE product by ID
-app.put('/api/products/:id', (req, res) => {
+app.put('/products/:id', (req, res) => {
     const product = products.find(p => p.id === parseInt(req.params.id));
     if (!product) return res.status(404).json({ message: 'Product not found' });
 
@@ -44,7 +44,7 @@ app.put('/api/products/:id', (req, res) => {
 });
 
 // DELETE product by ID
-app.delete('/api/products/:id', (req, res) => {
+app.delete('/products/:id', (req, res) => {
     const productIndex = products.findIndex(p => p.id === parseInt(req.params.id));
     if (productIndex === -1) return res.status(404).json({ message: 'Product not found' });
 
