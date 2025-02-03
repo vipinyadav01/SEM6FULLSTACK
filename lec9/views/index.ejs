@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>products</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <h1>Product List</h1>
+    <div class="container">
+        <a href="/add" class="btn btn-add">Add Product</a>
+        <ul class="product-list">
+            <% products.forEach(product => { %>
+                <li class="product-item">
+                    <div class="product-info">
+                        <strong><%= product.name %></strong>
+                        <span class="price">₹<%= product.price.toFixed(2) %></span>
+                        <p class="description"><%= product.description %></p>
+                    </div>
+                    <div class="product-actions">
+                        <a href="/update/<%= product.id %>" class="btn btn-update">Update</a>
+                        <a href="/delete/<%= product.id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+</body>
+</html>

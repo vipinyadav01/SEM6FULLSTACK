@@ -1,64 +1,192 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
-const dataFilePath = path.join(__dirname, "../database/products.json");
-
-// Ensure the database folder and file exist
-if (!fs.existsSync(path.dirname(dataFilePath))) {
-    fs.mkdirSync(path.dirname(dataFilePath), { recursive: true });
-}
-if (!fs.existsSync(dataFilePath)) {
-    fs.writeFileSync(dataFilePath, "[]");
-}
-
-// Load products from JSON
-const loadProducts = () => {
-    return JSON.parse(fs.readFileSync(dataFilePath, "utf8"));
+const productsFilePath = path.join(__dirname, '../products.json');
+const createProductsFileIfNotExists = () => {
+    if (!fs.existsSync(productsFilePath)) {
+        fs.writeFileSync(productsFilePath, JSON.stringify([], null, 2));
+    }
 };
 
-// Save products to JSON
+const getProducts = () => {
+    createProductsFileIfNotExists();
+    try {
+        const data = fs.readFileSync(productsFilePath, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Error reading products:', error);
+        return [];
+    }
+};
+
 const saveProducts = (products) => {
-    fs.writeFileSync(dataFilePath, JSON.stringify(products, null, 2));
+    try {
+        fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2));
+        return true;
+    } catch (error) {
+        console.error('Error saving products:', error);
+        return false;
+    }
 };
 
-// Show all products
+const validateProduct = (product) => {
+    const errors = [];
+    if (!product.name || product.name.trim().length === 0) {
+        errors.push('Name is required');
+    }
+    if (!product.price || isNaN(product.price) || product.price <= 0) {
+        errors.push('Valid price is required');
+    }
+    if (!product.description || product.description.trim().length === 0) {
+        errors.push('Description is required');
+    }
+    return errors;
+};
 exports.getAllProducts = (req, res) => {
-    const products = loadProducts();
-    res.render("index", { products });
+    try {
+        const products = getProducts();
+        res.render('index', {
+            products,
+            currentTime: new Date().toISOString(),
+            user: 'vipinyadav01'
+        });
+    } catch (error) {
+        console.error('Error getting products:', error);
+        res.status(500).render('error', { message: 'Error loading products' });
+    }
 };
 
-// Add a new product
+exports.getAddProductForm = (req, res) => {
+    res.render('addProduct', {
+        currentTime: new Date().toISOString(),
+        user: 'vipinyadav01'
+    });
+};
+
 exports.addProduct = (req, res) => {
-    let products = loadProducts();
-    const { name, price } = req.body;
-    const newProduct = { id: Date.now(), name, price };
-    products.push(newProduct);
-    saveProducts(products);
-    res.redirect("/");
+    try {
+        const { name, price, description } = req.body;
+        const newProduct = {
+            name: name.trim(),
+            price: parseFloat(price),
+            description: description.trim()
+        };
+
+        const errors = validateProduct(newProduct);
+        if (errors.length > 0) {
+            return res.status(400).render('addProduct', {
+                errors,
+                product: newProduct,
+                currentTime: new Date().toISOString(),
+                user: 'vipinyadav01'
+            });
+        }
+
+        const products = getProducts();
+        newProduct.id = Date.now();
+        newProduct.createdAt = new Date().toISOString();
+        newProduct.createdBy = 'vipinyadav01';
+
+        products.push(newProduct);
+
+        if (saveProducts(products)) {
+            res.redirect('/');
+        } else {
+            throw new Error('Failed to save product');
+        }
+    } catch (error) {
+        console.error('Error adding product:', error);
+        res.status(500).render('error', { message: 'Error adding product' });
+    }
 };
 
-// Delete product
-exports.deleteProduct = (req, res) => {
-    let products = loadProducts();
-    products = products.filter((p) => p.id !== parseInt(req.params.id));
-    saveProducts(products);
-    res.redirect("/");
+exports.getUpdateProductForm = (req, res) => {
+    try {
+        const productId = parseInt(req.params.id);
+        const products = getProducts();
+        const product = products.find(p => p.id === productId);
+
+        if (!product) {
+            return res.status(404).render('error', { message: 'Product not found' });
+        }
+
+        res.render('updateProduct', {
+            product,
+            currentTime: new Date().toISOString(),
+            user: 'vipinyadav01'
+        });
+    } catch (error) {
+        console.error('Error getting product:', error);
+        res.status(500).render('error', { message: 'Error loading product' });
+    }
 };
 
-// Show update form
-exports.getUpdateForm = (req, res) => {
-    const products = loadProducts();
-    const product = products.find((p) => p.id === parseInt(req.params.id));
-    res.render("updateProduct", { product });
-};
-
-// Update product
 exports.updateProduct = (req, res) => {
-    let products = loadProducts();
-    const { name, price } = req.body;
-    products = products.map((p) =>
-        p.id === parseInt(req.params.id) ? { ...p, name, price } : p
-    );
-    saveProducts(products);
-    res.redirect("/");
+    try {
+        const productId = parseInt(req.params.id);
+        const { name, price, description } = req.body;
+
+        const updatedProduct = {
+            id: productId,
+            name: name.trim(),
+            price: parseFloat(price),
+            description: description.trim()
+        };
+
+        const errors = validateProduct(updatedProduct);
+        if (errors.length > 0) {
+            return res.status(400).render('updateProduct', {
+                errors,
+                product: updatedProduct,
+                currentTime: new Date().toISOString(),
+                user: 'vipinyadav01'
+            });
+        }
+
+        const products = getProducts();
+        const index = products.findIndex(p => p.id === productId);
+
+        if (index === -1) {
+            return res.status(404).render('error', { message: 'Product not found' });
+        }
+
+        updatedProduct.updatedAt = new Date().toISOString();
+        updatedProduct.updatedBy = 'vipinyadav01';
+        updatedProduct.createdAt = products[index].createdAt;
+        updatedProduct.createdBy = products[index].createdBy;
+
+        products[index] = updatedProduct;
+
+        if (saveProducts(products)) {
+            res.redirect('/');
+        } else {
+            throw new Error('Failed to update product');
+        }
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).render('error', { message: 'Error updating product' });
+    }
+};
+
+exports.deleteProduct = (req, res) => {
+    try {
+        const productId = parseInt(req.params.id);
+        let products = getProducts();
+
+        const productExists = products.some(p => p.id === productId);
+        if (!productExists) {
+            return res.status(404).render('error', { message: 'Product not found' });
+        }
+
+        products = products.filter(p => p.id !== productId);
+
+        if (saveProducts(products)) {
+            res.redirect('/');
+        } else {
+            throw new Error('Failed to delete product');
+        }
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        res.status(500).render('error', { message: 'Error deleting product' });
+    }
 };
