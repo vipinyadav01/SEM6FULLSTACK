@@ -1,7 +1,7 @@
 {
     "name": "product",
     "version": "1.0.0",
-    "description": "Simple product management with EJS and JSON storage",
+    "description": "product management with EJS and JSON storage",
     "main": "server.js",
     "scripts": {
         "start": "node server.js"
