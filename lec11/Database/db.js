@@ -1,9 +1,13 @@
-const { ConnectionStates } = require("mongoose");
-try {
-    
+const mongoose = require('mongoose');
+const uri = 'your-mongodb-connection-string-here';
 
-} catch (error) {
-
+async function connect() {
+    try {
+        await mongoose.connect(uri);
+        console.log('Connected successfully to MongoDB');
+    } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+        process.exit(1);
+    }
 }
-
-ConnectionStates
+module.exports = { connect };
