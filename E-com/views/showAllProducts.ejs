@@ -7,7 +7,7 @@
     <div class="product-card">
       <img src="<%= product.imageUrl || '/images/default-product.jpg' %>" alt="<%= product.name %>">
       <h3><%= product.name %></h3>
-      <p>$<%= product.price.toFixed(2) %></p>
+      <p>₹<%= product.price.toFixed(2) %></p>
       <p>In Stock: <%= product.stock %></p>
       <a href="/products/<%= product._id %>" class="btn">View Details</a>
     </div>

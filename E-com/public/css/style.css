@@ -172,3 +172,323 @@ body {
     padding: 20px 0;
     margin-top: 20px;
   }
+
+  /* Product Detail */
+.product-info {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.product-info img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.product-meta {
+  flex: 1;
+}
+
+.rating {
+  margin: 10px 0;
+  color: #e8491d;
+}
+
+.rating .star {
+  font-size: 1.2em;
+}
+
+.rating .star.filled {
+  color: gold;
+}
+
+.num-reviews {
+  color: #666;
+  font-size: 0.9em;
+  margin-left: 5px;
+}
+
+/* Reviews Section */
+.reviews-section {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.review-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.review-form h4 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Reviews List */
+.reviews-list {
+  margin-top: 20px;
+}
+
+.review {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.review:last-child {
+  border-bottom: none;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.review-header h5 {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.review-rating {
+  margin-right: 10px;
+}
+
+.review-rating .star {
+  font-size: 1em;
+}
+
+.review-comment {
+  margin: 10px 0;
+}
+
+.delete-review-form {
+  margin-top: 10px;
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 0.8em;
+}
+
+/* Product Detail */
+.product-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.product-info {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.product-info img {
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.product-meta {
+  flex: 1;
+}
+
+.product-meta h2 {
+  margin-top: 0;
+  font-size: 2rem;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.star {
+  color: #ccc;
+  font-size: 1.5rem;
+  margin-right: 0.2rem;
+  position: relative;
+}
+
+.star.filled {
+  color: gold;
+}
+
+.star.half:before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: gold;
+}
+
+.rating-value {
+  margin: 0 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.num-reviews {
+  color: #666;
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #e63946;
+  margin: 1rem 0;
+}
+
+.category {
+  color: #666;
+  text-transform: capitalize;
+}
+
+.stock {
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.stock.out-of-stock {
+  color: #e63946;
+}
+
+.description {
+  line-height: 1.6;
+  margin: 2rem 0;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Reviews Section */
+.reviews-section {
+  border-top: 1px solid #eee;
+  padding-top: 2rem;
+}
+
+.review-form {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 3rem;
+}
+
+.review-form h4 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  min-height: 150px;
+}
+
+.form-group.has-error select,
+.form-group.has-error textarea {
+  border-color: #e63946;
+}
+
+.error-text {
+  color: #e63946;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  display: block;
+}
+
+.alert-error {
+  background: #ffecec;
+  color: #e63946;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.reviews-list {
+  margin-top: 2rem;
+}
+
+.review {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.review-header h5 {
+  margin: 0 1rem 0 0;
+}
+
+.review-rating {
+  margin-right: 1rem;
+}
+
+.review-rating .star {
+  font-size: 1rem;
+}
+
+.review-comment {
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+.no-reviews {
+  color: #666;
+  font-style: italic;
+}
+
+.delete-review-form {
+  margin-top: 1rem;
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
